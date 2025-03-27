@@ -25,14 +25,14 @@ Main functions used:
 - main() - orchestrates the entire process — it fetches ISW data and uploads each record to Google Drive.
 
 To use the script, the user needs to:  
-  1. Create a project in Google Cloud Console.  
-  2. Enable the Google Drive API for the project.  
-  3. Create a service account and generate a JSON key file.  
-  4. Download the .json key file and provide the correct path in the SERVICE_ACCOUNT_FILE variable.  
-  5. Create a root folder in Google Drive and set its ID in the ROOT_FOLDER_ID variable.  
-  6. Share access to that folder with the service account’s email (found inside the JSON file).  
-  7. Install the required Python packages: google-api-python-client, google-auth, pandas, requests, beautifulsoup4.  
-  8. Run the script using the command: python your_script.py.
+- Create a project in Google Cloud Console.
+- Enable the Google Drive API for the project.
+- Create a service account and generate a JSON key file.
+- Download the .json key file and provide the correct path in the SERVICE_ACCOUNT_FILE variable.
+- Create a root folder in Google Drive and set its ID in the ROOT_FOLDER_ID variable.
+- Share access to that folder with the service account’s email (found inside the JSON file).
+- Install the required Python packages: google-api-python-client, google-auth, pandas, requests, beautifulsoup4.
+- Run the script using the command: python your_script.py.
 
 
 4. get_and_download_recent_isw_data.py - This Python script checks for and processes the most recent daily report (specifically, yesterday’s report) from the Institute for the Study of War (ISW) website. It parses the ISW updates page, searches for the report matching yesterday’s date, extracts its content, and appends it to a local CSV file (`ukraine_conflict_updates.csv`) if it hasn’t been saved already. The script also uploads the new entry to Google Drive in a structured folder system (`year/month/date.csv`) using the save_entry_to_drive_csv function (imported from get_and_download_hist_isw_data.py file).  
@@ -41,7 +41,4 @@ This script is intended to be used with a cron job on a server, running automati
 
 
 Developers:
-Renata Gomon
-Anastasiia Konstantynovska
-Daria Zasko
-Khrystyna Skulysh
+Renata Gomon, Anastasiia Konstantynovska, Daria Zasko, Khrystyna Skulysh
