@@ -39,6 +39,8 @@ To use the script, the user needs to:
 
 This script is intended to be used with a cron job on a server, running automatically every day to keep the dataset up to date without manual intervention. It ensures that each report is processed and saved only once, making it ideal for automated daily archival of ISW conflict updates.
 
+5. data_preparation_and_model_training.ipynb
+Main file for data preparation and model training. More details can be found in model_training_README.md
 
 Developers:
 Renata Gomon, Anastasiia Konstantynovska, Daria Zasko, Khrystyna Skulysh
