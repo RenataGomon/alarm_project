@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Air Alarm Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2em;
+            background: #f9f9f9;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 1.5em;
+        }
+
+        select, input[type="date"], input[type="time"] {
+            padding: 0.5em;
+            font-size: 1em;
+            margin-bottom: 1em;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .forecast-container {
+            margin-top: 2em;
+        }
+
+        .region-name {
+            font-size: 1.2em;
+            margin-top: 1em;
+            font-weight: bold;
+        }
+
+        .hour {
+            display: inline-block;
+            margin: 0.25em 0.5em;
+            font-size: 0.95em;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 6px;
+        }
+
+        .dot-green {
+            background-color: #28a745;
+        }
+
+        .dot-red {
+            background-color: #dc3545;
+        }
+
+        #previous-prediction-fields {
+            display: none;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('forecast-form');
+
+            form.addEventListener('submit', function(event) {
+                console.log("Form submitted");
+
+                const mode = document.querySelector('input[name="mode"]:checked').value;
+                const location = document.getElementById('location').value;
+
+                if (!location) {
+                    alert('Please select a region.');
+                    event.preventDefault();
+                    return;
+                }
+
+                if (mode === 'previous') {
+                    const date = document.querySelector('input[name="date"]').value;
+                    const time = document.querySelector('input[name="time"]').value;
+
+                    if (!date || !time) {
+                        alert('Please select both date and time for previous prediction.');
+                        event.preventDefault();
+                        return;
+                    }
+                }
+
+                console.log("Form is ready to submit.");
+            });
+
+            document.querySelectorAll('input[name="mode"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    const previousFields = document.getElementById('previous-prediction-fields');
+                    previousFields.style.display = this.value === 'previous' ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Air Alarm Forecast</h1>
+
+    <form method="POST" action="/get_forecast" id="forecast-form">
+        <label for="location">Choose a region:</label>
+        <select name="location" id="location" required>
+            <option value="">-- Select Region --</option>
+            <option value="all">All Regions</option>
+            {% set region_map = {
+                1: "Simferopol",
+                2: "Vinnytsia",
+                3: "Lutsk",
+                4: "Dnipro",
+                5: "Donetsk",
+                6: "Zhytomyr",
+                7: "Uzhgorod",
+                8: "Zaporozhye",
+                9: "Ivano-Frankivsk",
+                10: "Kyiv_obl",
+                11: "Kropyvnytskyi",
+                12: "Luhansk",
+                13: "Lviv",
+                14: "Mykolaiv",
+                15: "Odesa",
+                16: "Poltava",
+                17: "Rivne",
+                18: "Sumy",
+                19: "Ternopil",
+                20: "Kharkiv",
+                21: "Kherson",
+                22: "Khmelnytskyi",
+                23: "Cherkasy",
+                24: "Chernivtsi",
+                25: "Chernihiv",
+                26: "Kyiv"
+            } %}
+            {% for id, name in region_map.items() %}
+                <option value="{{ id }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="mode">Choose prediction type:</label><br>
+        <input type="radio" name="mode" value="new" checked> New Prediction<br>
+        <input type="radio" name="mode" value="previous"> Previous Prediction<br>
+
+        <div id="previous-prediction-fields">
+            <label for="date">Select Date (up to today):</label>
+            <input type="date" name="date" max="{{ now }}"><br>
+
+            <label for="time">Select Time:</label>
+            <input type="time" name="time"><br>
+        </div>
+
+        <button type="submit" id="submit-btn">Get Forecast</button>
+    </form>
+
+    {% if forecast %}
+        <div class="forecast-container">
+            {% for region_name, days in forecast.items() %}
+                <div class="region-name">{{ region_name }}</div>
+                {% set all_hours = days['today'].items() | list + days['tomorrow'].items() | list %}
+                {% for hour, value in all_hours %}
+                    <div class="hour">
+                        {{ hour }}
+                        <span class="dot {% if value == 1 %}dot-red{% else %}dot-green{% endif %}"></span>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>
