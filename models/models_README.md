@@ -1,7 +1,7 @@
 Contains files necessary to train model RandomForestClassifier:
-  -scaler.pkl : allows to reproduce the exact scaling conditions required for consistent data processing in forecasting or analysis.
-  -vectorizer.pkl : a serialised TfidfVectorizer object that was trained on a corpus of news articles about the conflict in Ukraine.
-  -RandomForestClassifier_training.ipynb : performs data preparation, training of the Random Forest model for airborne alarm prediction, and visualisation of the results and importance of the features.
+-scaler.pkl : allows to reproduce the exact scaling conditions required for consistent data processing in forecasting or analysis.
+-vectorizer.pkl : a serialised TfidfVectorizer object that was trained on a corpus of news articles about the conflict in Ukraine.
+-RandomForestClassifier_training.ipynb : performs data preparation, training of the Random Forest model for airborne alarm prediction, and visualisation of the results and importance of the features.
   
  To run the RandomForestClassifier_training.ipynb code:
  1) Open Terminal
