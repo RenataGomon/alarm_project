@@ -2,6 +2,11 @@
 Project description:
 The goal of this project is to create and train a machine learning model to make air alert predictions in Ukraine. Our program analyses data and makes predictions about air alerts by gathering real-time data from multiple sources, including military reports, weather forecasts, air alerts, and data from Telegram channels.
 
+Requirements:
+All the Python dependencies required to run this project are listed in the requirements.txt file.
+To install them, make sure you have Python 3 and run:
+pip install -r requirements.txt
+
 
 Scripts description:
 
