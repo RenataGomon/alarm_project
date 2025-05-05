@@ -25,34 +25,132 @@ To install them, make sure you have Python 3 and run:
 - uWSGI (port :8000) — serves the production frontend interface
 - RandomForestClassifier — machine learning model used for predictions
 - APIs:
-  - Weather data: Weather Crossing API
-  - Air alarm status API
-- ISW Reports — are saved on Google Drive by cron once a day
+  - Weather data: Weather Crossing API (you need to get API key)
+  - Air alarm status API from https://devs.alerts.in.ua/ (you need to get API key)
+- ISW Reports — are saved on Google Drive by cron once a day (get your API key from Google Cloud Console)
 
 ## System Architecture diagram 
+![Copy of diagram](https://github.com/user-attachments/assets/77934592-6e06-4440-8a50-624a8e0d1bfe)
 
 ## Project Structure
+In our repository you can find many files that we needed at some stage of this project, but they are no longer used. In order to use our system you need to have this structure with this file names (detailed description about each file can be found in READMEs in respective folders)
+
+alarm_project/
+│
+├── main_prediction/                               # Main folder with system architecture
+│   ├── data_components                            # folder with scripts to get data for prediction
+|   │   ├── get_alarm_percent.py                   # returns percent of other regions with alarm from Air Alarm API
+|   │   ├── get_isw_vector.py                      # returns tf_idf vector of isw report from Drive
+|   │   ├── get_weather_forecast.py                # returns weather forecast from Weather Crossing API
+|   │   └── merge_dataset_for_prediction.py        # returns dataset with data listed above for model prediction
+|   |   
+│   ├── templates                                  # folder with html related files
+|   │   ├── update_html.ipynb                      # ipynb file for updating html
+|   │   └── index.html                             # html file with UI
+|   |   
+│   ├── all_regions_prediction.py                  # code used with cron for making and saving predictions for all regions on Drive every hour
+│   ├── download_prediction_from_drive.py          # function to find and download prediction from drive
+│   ├── get_data_for_prediction.py                 # returns dataframe for prediction
+│   ├── get_prediction.py                          # html file with UI
+│   ├── get_recent_isw.py                          # code used with cron for downloading isw report every day
+│   ├── get_region_id.py                           # contaions functions to get region name from id or vica versa
+│   ├── make_prediction_for_region.py              # function to make predictions for one or many regions (here our model is loaded)
+│   ├── model_utils.py                             # has TrainedModel class for saving metadata and making predictions with custom probability distribution
+│   ├── prediction.py                              # main file with endpoints for user to run in uwsgi command (shown in Deployment)
+│   ├── regions_name_map.py                        # has region name map for consistensy in naming
+│   └── text_utils.py                              # has functions needed for vectorizer
+│
+├── models/                                        # folder with needed pickle objects
+│   ├── RandomForest_model_1.pkl                   # model for prediction
+│   ├── scaler.pkl                                 # fscaler for weather data
+│   └── vectorizer.pkl                             # tf_idf vectorizer for isw reports
+│
+├── your_google_drive_access_file.json             # file from Google Drive API for access to files
+└── requirements.txt                               # Python dependencies
+
 
 ## Deployment
 - EC2 Amazon Instance Setup: Ubuntu with necessary Python environment
 - Jupyter Notebook accessible at http://<your-ec2-ip>:8888
-- Production Web App available at http://<your-ec2-ip>:8000
+- Uwsgi available at http://<your-ec2-ip>:8000
 
 In order to run uwsgi you need to run this command in terminal:
 ``` uwsgi --http 0.0.0.0:8000 --wsgi-file main_prediction/prediction.py --callable app --processes 4 --threads 2 --stats 127.0.0.1:9191 --harakiri 200 ```
 
 
 ## Installation (Local Dev)
-Clone the repository:
-``` git clone https://github.com/yourusername/air-alarm-prediction.git
-cd air-alarm-prediction ```
-Leave only these folders: main_prediction, models (others are unnecessary as they were used on preparation stage of the project)
+- Set up EC2 Amazon Instance
+- Connect to it via terminal and ssh
+- In order to set up your server run this commands:
+``` cd Downloads
+
+sudo apt update -y
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+
+ 
+sudo apt-get install -y make build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev libncurses-dev tk-dev
+ 
+curl https://pyenv.run | bash
+ 
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+ 
+exec "$SHELL"
+
+pyenv --version
+
+pyenv global 3.8.0
+ 
+python -V
+
+cd /home/ubuntu
+
+sudo apt update -y
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+
+mkdir jn
+
+cd jn
+
+python -m venv .venv
+
+. .venv/bin/activate
+
+pip install --upgrade pip
+ 
+pip install notebook
+
+jupyter notebook --generate-config
+ 
+nano /home/ubuntu/.jupyter/jupyter_notebook_config.py
+
+# Add this 4 lines below in opened file after c is determined
+# The IP address the notebook server will listen on.
+c.NotebookApp.ip = '0.0.0.0' # default value is 'localhost'
+c.NotebookApp.open_browser = False # default value is True`
+c.NotebookApp.password = u'sha1:b33024f36caa:ca337d6d6204ef502d69f8a49a915881c5e47ffa' 
+
+jupyter notebook
+```
+
+Add requirements.txt in jupyter notebook, by opening it in browser: http://<your_ip>:8888/
+then run in terminal:
+```pip install -r requirements.txt```
+
+After that you can clone our reposytory:
+``` git clone https://github.com/yourusername/air-alarm-prediction.git ```
+``` cd air-alarm-prediction ```
+But leave only these folders: main_prediction, models (others are unnecessary as they were used on preparation stage of the project)
 
 ## Usage
-Navigate to the web app at http://<your-ec2-ip>:8000
+Don't forget to run command in Deployment section.
+Then navigate to the uwsgi at http://<your-ec2-ip>:8000
 Choose between:
-New Prediction: select a region and view forecasted air alarms
-Previous Prediction: select a date/time and region to retrieve archived predictions
+- New Prediction: select a region and view forecasted air alarms
+- Previous Prediction: select a date/time and region to retrieve archived predictions
 
 ## Model
 Trained using RandomForestClassifier
