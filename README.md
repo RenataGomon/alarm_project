@@ -35,8 +35,7 @@ To install them, make sure you have Python 3 and run:
 ## Project Structure
 In our repository you can find many files that we needed at some stage of this project, but they are no longer used. In order to use our system you need to have this structure with this file names (detailed description about each file can be found in READMEs in respective folders)
 
-<pre lang="markdown"> <details> <summary><strong>Project Structure</strong></summary> ``` alarm_project/ │ ├── main_prediction/ # Main folder with system architecture │ ├── data_components/ # Scripts to get data for prediction │ ├── get_alarm_percent.py # Returns % of other regions with alarm from Air Alarm API │ ├── get_isw_vector.py # Returns TF-IDF vector of ISW report from Drive │ ├── get_weather_forecast.py # Gets weather forecast from Weather Crossing API │ └── merge_dataset_for_prediction.py # Merges all above into dataset for prediction │ ├── templates/ # HTML related files │ ├── update_html.ipynb # Notebook to update HTML │ └── index.html # Main HTML UI file │ ├── all_regions_prediction.py # Used with cron to predict for all regions hourly and save to Drive ├── download_prediction_from_drive.py # Finds and downloads predictions from Drive ├── get_data_for_prediction.py # Returns dataframe for prediction ├── get_prediction.py # UI interface (HTML + logic) ├── get_recent_isw.py # Used with cron to download ISW reports daily ├── get_region_id.py # Functions for converting region name ↔ ID ├── make_prediction_for_region.py # Loads model and predicts for one/many regions ├── model_utils.py # TrainedModel class with metadata and probability logic ├── prediction.py # Main UWSGI entry file with user endpoints ├── regions_name_map.py # Region name mapping for consistency ├── text_utils.py # Utilities for ISW vectorization │ ├── models/ # Pickled model and preprocessing files │ ├── RandomForest_model_1.pkl # Trained RandomForestClassifier │ ├── scaler.pkl # Scaler for weather data │ └── vectorizer.pkl # TF-IDF vectorizer for ISW reports │ ├── your_google_drive_access_file.json # Credentials file for Google Drive API └── requirements.txt # Python dependencies ``` </details> </pre>
-
+```
 alarm_project/
 │
 ├── main_prediction/                               # Main folder with system architecture
@@ -69,7 +68,7 @@ alarm_project/
 │
 ├── your_google_drive_access_file.json             # file from Google Drive API for access to files
 └── requirements.txt                               # Python dependencies
-
+```
 
 ## Deployment
 - EC2 Amazon Instance Setup: Ubuntu with necessary Python environment
