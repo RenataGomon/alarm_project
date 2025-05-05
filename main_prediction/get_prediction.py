@@ -155,5 +155,8 @@ def get_predictions(region_id=None, location="all", date=None, file_time=None, f
         "metadata": metadata,
         "regions_forecast": all_region_predictions
     }
-
-    return jsonify(result)
+    
+    if for_api:
+        return jsonify(result)
+    else:
+        return result
