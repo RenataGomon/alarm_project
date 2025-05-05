@@ -1,3 +1,5 @@
+In this folders lies files that were used in preparation stage of the project, but in not used in final structure.
+
 data_preparation_and_model_training.ipynb is our main notebook for second stage of this project, where we:
   - Cleaned and prepared data
   - Merged all datasets: weather, air alarms, and ISW reports (TF-IDF + PCA)
