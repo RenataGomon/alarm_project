@@ -1,0 +1,5 @@
+Scripts description:
+
+get_weather_forecast.py - This code returns weather forecast for 24 hours in a given location. The code works with the visual crossing weather API. To get the data, user needs to insert their token and their RSA key from API to WEATHER_RSA_KEY="", and send a "Post" request from Postman using this link http://<your_server_ip>:8000/content/api/v1/integration/generate. User should pass their token and needed location in request ("Ukraine" or "Region name, Ukraine" The request returns all weather information provided by visual crossing for given location.
+
+get_air_alarm_status.py - This code returns up-to-date information on air alerts in Ukraine. The code works with the API from this website https://devs.alerts.in.ua/ . To get the data, user needs to insert the token and their RSA API key, save this script on the server and use a Postman to get a response same as in get_weather_forecast.py file. The request returns all regions and communities where there is an alarm.
