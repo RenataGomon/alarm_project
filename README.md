@@ -1,20 +1,20 @@
-## Air Alarm Prediction Project
-# Project description:
+# Air Alarm Prediction Project
+## Project description:
 The goal of this project is to create and train a machine learning model to make air alert predictions in Ukraine. Our program analyses data and makes predictions about air alerts by gathering real-time data from multiple sources, including military reports, weather forecasts, air alerts, and data from Telegram channels.
 
 This is a web-based SaaS platform deployed on an AWS EC2 instance for predicting potential air alarms in Ukraine using weather forecast, real-time air alarm status, ISW reports, and a trained machine learning model. The system offers an intuitive interface for making new predictions and retrieving past forecasts from Google Drive.
 
-# Requirements:
+## Requirements:
 All the Python dependencies required to run this project are listed in the requirements.txt file.
 To install them, make sure you have Python 3 and run:
 ``` pip install -r requirements.txt ```
 
 
 ## Features
-# New Prediction:
+### New Prediction:
 - Select a region from a predefined list.
 - View air alarm forecast for the next 24 hours.
-# Previous Prediction:
+### Previous Prediction:
 - Select region, date, and time.
 - View historical prediction results retrieved from a shared Google Drive.
 
