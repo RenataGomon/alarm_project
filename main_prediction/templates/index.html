@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +38,7 @@
         }
 
         .region-name {
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-top: 1em;
             font-weight: bold;
         }
@@ -69,6 +68,53 @@
         #previous-prediction-fields {
             display: none;
         }
+        
+        .day-title {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 30px 0 10px;
+        }
+        
+        .forecast-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        
+        .forecast-table th,
+        .forecast-table td {
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .forecast-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .forecast-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .forecast-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        
+        .status.safe {
+            color: green;
+        }
+        
+        .status.alarm {
+            color: red;
+        }
+        
+        .region-name {
+            text-align: left;
+            font-weight: bold;
+            padding-top: 12px;
+            font-size: 18px;
+        }
+
     </style>
 
     <script>
@@ -126,7 +172,7 @@
                 5: "Donetsk",
                 6: "Zhytomyr",
                 7: "Uzhgorod",
-                8: "Zaporozhye",
+                8: "Zaporizhzhia",
                 9: "Ivano-Frankivsk",
                 10: "Kyiv_obl",
                 11: "Kropyvnytskyi",
@@ -165,21 +211,39 @@
 
         <button type="submit" id="submit-btn">Get Forecast</button>
     </form>
-
+    
     {% if forecast %}
-        <div class="forecast-container">
-            {% for region_name, days in forecast.items() %}
-                <div class="region-name">{{ region_name }}</div>
-                {% set all_hours = days['today'].items() | list + days['tomorrow'].items() | list %}
-                {% for hour, value in all_hours %}
-                    <div class="hour">
-                        {{ hour }}
-                        <span class="dot {% if value == 1 %}dot-red{% else %}dot-green{% endif %}"></span>
-                    </div>
-                {% endfor %}
+        {% for region_name, days in forecast.items() %}
+            <div class="region-name">{{ region_name }}</div>
+    
+            {% for day_name in ['today', 'tomorrow'] %}
+                <div class="day-title">{{ day_name|capitalize }}</div>
+                <table class="forecast-table">
+                    <thead>
+                        <tr>
+                            <th>Hour</th>
+                            {% for hour in days[day_name].keys() %}
+                                <th>{{ hour }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Status</td>
+                            {% for hour, value in days[day_name].items() %}
+                                <td>
+                                    <span class="status {% if value == 1 %}alarm{% else %}safe{% endif %}">
+                                        {% if value == 1 %}⚠️<br>Alarm!{% else %}✅<br>Safety{% endif %}
+                                    </span>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
             {% endfor %}
-        </div>
+        {% endfor %}
     {% endif %}
+
 
     {% if error %}
         <p style="color: red;">Error: {{ error }}</p>
