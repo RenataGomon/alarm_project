@@ -14,9 +14,12 @@ To install them, make sure you have Python 3 and run:
 ### New Prediction:
 - Select a region from a predefined list.
 - View air alarm forecast for the next 24 hours.
+<img width="1423" alt="Screenshot 2025-05-05 at 20 53 25" src="https://github.com/user-attachments/assets/741fe3bd-ce41-468c-802f-bb285a3213cf" />
+
 ### Previous Prediction:
 - Select region, date, and time.
 - View historical prediction results retrieved from a shared Google Drive.
+<img width="1422" alt="Screenshot 2025-05-05 at 21 58 12" src="https://github.com/user-attachments/assets/9c2cd036-0cf8-4041-8b40-888b26ec1848" />
 
 
 ## Technologies Used
