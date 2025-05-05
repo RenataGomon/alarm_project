@@ -14,7 +14,8 @@ To install them, make sure you have Python 3 and run:
 ### New Prediction:
 - Select a region from a predefined list.
 - View air alarm forecast for the next 24 hours.
-<img width="1423" alt="Screenshot 2025-05-05 at 20 53 25" src="https://github.com/user-attachments/assets/741fe3bd-ce41-468c-802f-bb285a3213cf" />
+<img width="1426" alt="Screenshot 2025-05-05 at 20 52 24" src="https://github.com/user-attachments/assets/91c34410-a638-4c4a-8764-a0e6b8f75df0" />
+
 
 ### Previous Prediction:
 - Select region, date, and time.
