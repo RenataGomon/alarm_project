@@ -1,4 +1,4 @@
-This repository contains the files necessary to train a `RandomForestClassifier` model:
+This folder contains the files necessary to train a `RandomForestClassifier` model:
 
 - **`scaler.pkl`** – allows reproducing the exact scaling conditions required for consistent data processing in forecasting or analysis.  
 - **`vectorizer.pkl`** – a serialized `TfidfVectorizer` object that was trained on a corpus of news articles about the conflict in Ukraine.  
