@@ -10,7 +10,7 @@ To install them, make sure you have Python 3 and run:
 ``` pip install -r requirements.txt ```
 
 
-## Features
+## System Capabilities 
 ### New Prediction:
 - Select a region from a predefined list.
 - View air alarm forecast for the next 24 hours.
