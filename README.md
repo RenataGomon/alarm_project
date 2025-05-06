@@ -83,7 +83,7 @@ In order to run uwsgi you need to run this command in terminal:
 ``` uwsgi --http 0.0.0.0:8000 --wsgi-file main_prediction/prediction.py --callable app --processes 4 --threads 2 --stats 127.0.0.1:9191 --harakiri 200 ```
 
 
-## Installation (Local Dev)
+## Installation
 - Set up EC2 Amazon Instance
 - Connect to it via terminal and ssh
 - In order to set up your server run this commands:
