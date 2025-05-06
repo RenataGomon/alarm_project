@@ -34,7 +34,7 @@ To install them, make sure you have Python 3 and run:
 - ISW Reports — are saved on Google Drive by cron once a day (get your API key from Google Cloud Console)
 
 ## System Architecture diagram 
-![Copy of diagram](https://github.com/user-attachments/assets/77934592-6e06-4440-8a50-624a8e0d1bfe)
+![IMAGE 2025-05-06 11:50:16](https://github.com/user-attachments/assets/51f2ea20-7b25-4f60-8ff2-a0adedb90d25)
 
 ## Project Structure
 In our repository you can find many files that we needed at some stage of this project, but they are no longer used. In order to use our system you need to have this structure with this file names (detailed description about each file can be found in READMEs in respective folders)
